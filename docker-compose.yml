@@ -1,9 +1,11 @@
-version: '2'
+version: '3'
 
 services:
-   rstudio:
-     image: johanneselias/rstudio-java:1.0
-     container_name: rstudio
+   tidyverse-rjava:
+     image: grrrck/tidyverse-rjava:latest
+     build:
+       context: .
+     container_name: tidyverse-rjava
      volumes: 
        - ./import:/home/rstudio/import
      ports:
