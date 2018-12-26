@@ -4,7 +4,7 @@
 
 Also includes `RJDBC` and `odbc` packages.
 
-## Using `docker-compose`
+## Using docker-compose
 
 Clone this repo and then run `docker-compose` to start up the container.
 
@@ -28,7 +28,16 @@ To obtain the drivers, visit <https://www.oracle.com/technetwork/database/databa
 
 If you use `docker-compose` to start up the docker image, you can then reference the `odbc8.jar` file in `~/import/instantclient_12_2/odbc8.jar` for use with RJDBC.
 
-## Run the container without `docker-compose`
+```r
+library(RJDBC)
+drv <- JDBC("oracle.jdbc.OracleDriver", classPath="~/import/instantclient_12_2/ojdbc8.jar")
+con <- dbConnect(drv,"jdbc:oracle:thin:@server:1521:database", 
+                 rstudioapi::askForSecret("Username"), 
+                 rstudioapi::askForPassword("Database Password"))
+dbGetQuery(con,"select count(*) from shema.table")
+```
+
+## Run the container without docker-compose
 
 ```
 docker build -t tidyverse-rjava:latest .
